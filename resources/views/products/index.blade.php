@@ -3,7 +3,7 @@
 @section('title','Products')
 @section('main_content')
 
-	<h4>All Products</h4>
+	<h3>All Products</h3>
 
 	<table>
 		@php $keys = array_keys($products->first()->toArray()); @endphp
@@ -27,14 +27,14 @@
 							<td>{{$product[$key]}}</td>
 						@endif
 					@endforeach
-					<td><a href=""><button type="button" class="btn btn-info">Info</button></a></td>
+					<td><a href="{{route('products.show',['product'=>$product['id']])}}"><button type="button" class="btn btn-info">Info</button></a></td>
 				</tr>
 			@endforeach
 		</tbody>
 	</table>	
 
 
-	<h5>DATA STRUCTURE ANALYSIS</h5>
+	<h4>DATA STRUCTURE ANALYSIS</h4>
 	@php
 		$products_array = $products->toArray();
 		$item_model     = $products->first();
