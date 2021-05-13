@@ -13,9 +13,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', 'MainController@index' )->name('home-page');
+Route::get('/', 'MainController@index' )->name('home');
 
-Route::resource('/products', 'DressController' );
+Route::resource('/products', 'ProductController' );
 
 // Route::get('/', function () {
 //     return view('home');

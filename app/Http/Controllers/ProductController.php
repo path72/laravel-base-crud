@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Dress; // ! il mio model ! //
 
-class DressController extends Controller
+class ProductController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +14,7 @@ class DressController extends Controller
      */
     public function index()
     {
-        //
+        return view('products.index');
     }
 
     /**
@@ -46,7 +46,7 @@ class DressController extends Controller
      */
     public function show($id)
     {
-        //
+        return $id;
     }
 
     /**
