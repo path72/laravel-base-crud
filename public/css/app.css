@@ -1,0 +1,15 @@
+table {
+	border: 1px solid lightgrey;
+	margin: 30px 10px;
+}
+th,td {
+	padding: 0 10px;
+	text-align: center;
+	border-right: 1px solid lightgrey;
+}
+th {
+	border-bottom: 1px solid lightgrey;
+}
+.grey {
+	color: lightgrey;
+}
