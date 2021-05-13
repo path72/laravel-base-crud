@@ -7,14 +7,20 @@
 @section('main_content')
 
 <main>
-	<h3>Product {{$product['model']}}</h3>
+	
+	@php $class=''; @endphp
+	@if ($product->availability==0) 
+	@php $class='grey'; @endphp
+	@endif
+	
+	<h3 class="{{$class}}">Model {{$product['model']}}</h3>
 
 	<div class="card">
 		<p>id: {{$product['id']}}</p>
-		<p>Size: {{$product['size']}}</p>
-		<p>Color: {{$product['color']}}</p>
-		<p>Fabric: {{$product['fabric']}}</p>
-		<p>Stock: {{$product['stock']}}</p>
+		<p>size: {{$product['size']}}</p>
+		<p>color: {{$product['color']}}</p>
+		<p>fabric: {{$product['fabric']}}</p>
+		<p>stock: {{$product['stock']}}</p>
 		@php
 			if ($product['availability']==1) $msg = 'Yes';
 			else $msg = 'No';
