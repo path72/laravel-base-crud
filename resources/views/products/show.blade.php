@@ -1,10 +1,13 @@
 @extends('layouts.app')
+{{-- @section('css')
+	<link rel="stylesheet" href="css/app.css">
+@endsection --}}
 
 @section('title','Product Page')
 @section('main_content')
 
 	<div class="card">
-		<h3>Product {{$product['model']}}</h3>
+		<h3>Product {{$product['model']}} (id: {{$product['id']}})</h3>
 	
 		<p>Size: {{$product['size']}}</p>
 		<p>Color: {{$product['color']}}</p>
