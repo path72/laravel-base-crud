@@ -1,32 +1,31 @@
 @extends('layouts.app')
-@section('css')
-	<link rel="stylesheet" href="../css/app.css">
-@endsection
 
 @section('title','Product Page')
 @section('main_content')
 
 <main>
-	
-	@php $class=''; @endphp
-	@if ($product->availability==0) 
-	@php $class='grey'; @endphp
-	@endif
-	
+
+	@php 
+		$keys  = array_keys($product->toArray());
+		$class = '';
+		$msg   = 'Yes'; 
+		if ($product->availability==0) {
+			$class = 'grey';
+			$msg   = 'No';
+		}
+	@endphp
+
 	<h3 class="{{$class}}">Model {{$product['model']}}</h3>
 
-	<div class="card">
-		<p>id: {{$product['id']}}</p>
-		<p>size: {{$product['size']}}</p>
-		<p>color: {{$product['color']}}</p>
-		<p>fabric: {{$product['fabric']}}</p>
-		<p>stock: {{$product['stock']}}</p>
-		@php
-			if ($product['availability']==1) $msg = 'Yes';
-			else $msg = 'No';
-		@endphp
-		<p>Available: {{$msg}}</p>
-	</div>
+	<table class="card">
+		@foreach ($keys as $key)
+			@if ($key != 'availability' && $key != 'created_at' && $key != 'updated_at')
+				<tr><td>{{$key}}</td><td>{{$product[$key]}}</td></tr>
+			@endif
+		@endforeach
+		<tr><td>available</td><td>{{$msg}}</td></tr>
+	</table>
+
 </main>
 
 @endsection

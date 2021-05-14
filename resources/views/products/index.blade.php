@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title','Products')
+@section('title','All Products')
 @section('main_content')
 
 <main>
@@ -9,14 +9,16 @@
 
 	<h3>All Products</h3>
 	
+	<a href="{{route('products.create')}}" class="btn btn-primary">New Product</a>
+
 	<div class="grid">
 		@foreach ($products as $product)
 			<div class="card">
 
-				@php $class=''; @endphp
-				@if ($product->availability==0) 
-					@php $class='grey'; @endphp
-				@endif
+				@php
+					$class='';
+					if ($product['availability']==0) $class='grey';
+				@endphp
 				
 				<h4 class="{{$class}}">{{$product['model']}}</h4>
 
