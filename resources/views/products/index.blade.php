@@ -9,6 +9,9 @@
 
 	<h3>All Products</h3>
 	
+	<!--
+		CREATE (laravel method: GET)
+	-->
 	<a href="{{route('products.create')}}" class="btn btn-primary">New Product</a>
 
 	<div class="grid">
@@ -29,7 +32,28 @@
 						@endif
 					@endforeach
 				</table>
-				<a href="{{route('products.show',['product'=>$product['id']])}}"><button type="button" class="btn btn-info">Info</button></a>
+				<div class="actions">
+					<!--
+						SHOW (laravel method: GET) 
+					-->
+					<a href="{{route('products.show',['product'=>$product['id']])}}"><button type="button" class="btn btn-info">Info</button></a>
+					<!--
+						EDIT (laravel method: GET)
+					-->
+					<a href="{{route('products.edit',['product'=>$product['id']])}}"><button type="button" class="btn btn-warning">Edit</button></a>
+					<!--
+						non posso usare link <a> che usa GET per chiamare ProductController, raggiungendo @index
+						per chiamare @destroy di PriductController serve method DELETE (vedi route:list), 
+						allora introduco form
+
+						DELETE (laravel method: DELETE, html method: POST)
+					-->
+					<form action="{{route('products.destroy',['product'=>$product['id']])}}" method="post">
+						@csrf
+						@method('DELETE')
+						<button type="submit" class="btn btn-danger">Delete</button>
+					</form>
+				</div>
 				
 			</div>
 		@endforeach
@@ -46,7 +70,7 @@
 	<div class="analysis">
 		<div class="card">
 			<div>
-				<p>Collection-model = array of Product-model</p>
+				<p>Collection = array of Product-model</p>
 				<p>(one table row inside each Product-model)</p>
 				@dump($products)
 			</div>

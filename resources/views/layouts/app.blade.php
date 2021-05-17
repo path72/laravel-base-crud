@@ -1,5 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<!-- posso indicare direttamente la lingua qua -->
+{{-- <html lang="it">  --}}
+<!-- oppure fare riferimento al gestore apposito -->
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">

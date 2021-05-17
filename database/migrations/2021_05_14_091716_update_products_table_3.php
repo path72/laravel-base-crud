@@ -26,7 +26,7 @@ class UpdateProductsTable3 extends Migration
     public function down()
     {
         Schema::table('products', function (Blueprint $table) {
-            $table->string('season')->default('estivo')->after('fabric');
+            $table->string('season')->default('summer')->after('fabric');
         });
     }
 }

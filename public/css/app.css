@@ -55,6 +55,12 @@ main, form {
 	flex-wrap: wrap;
 	justify-content: center;
 }
+.actions {
+	display: flex;
+}
+.actions a, .actions form {
+	padding: 0 5px;
+} 
 table {
 	min-width: 180px;
 	margin: 5px 0 15px;
