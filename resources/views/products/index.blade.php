@@ -3,6 +3,13 @@
 @section('title','All Products')
 @section('main_content')
 
+{{-- 
+	READ -> index()
+	all Model data (whole DB table) are available here  
+	via ModelController@index
+--}}
+{{-- @dump($products) --}}
+
 <main>
 
 	@php $keys = array_keys($products->first()->toArray()); @endphp
@@ -82,13 +89,13 @@
 		</div>
 		<div class="card">
 			<div>
-				<p>array of arrays of table row values</p>
-				<p>(Collection-model -> toArray())</p>
+				<p>Collection -> toArray() = array of arrays of table row values</p>
+				<p>just DB data, no laravel structure</p>
 				@dump($products_array)
 			</div>
 			<div>
-				<p>arrays of table first row values</p>
-				<p>(Product-model -> toArray())</p>
+				<p>Product-model -> toArray() = arrays of table first row values</p>
+				<p>just DB data (first row), no laravel structure</p>
 				@dump($item_array)
 			</div>
 		</div>
@@ -96,4 +103,4 @@
 	
 </main>
 
-@endsection
+@endsection	

@@ -3,8 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Psy\Command\DumpCommand;
-use App\Product; // ! model associato a tabella products ! //
+use App\Product; // ! Product Model in use here ! //
 
 class ProductController extends Controller
 {
@@ -17,15 +16,15 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-	public function index()
+    public function index()
     {
 		// all data from Model
 		$products = Product::all();
-		
-		// # MODE 2: Model > whole data flow > compact() # 
-		return view('products.index',compact('products'));
-				
-		// # MODE 1: Model > whole data flow > data pipe # 	
+
+		// # MODE 1 # 
+        return view('products.index',compact('products'));
+
+		// # MODE 2 # 
 		// $data = [
 		// 	'products' => $products
 		// ];
@@ -43,7 +42,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-		return view('products.create');
+        return view('products.create');
     }
 
     /**
@@ -59,8 +58,9 @@ class ProductController extends Controller
     public function store(Request $request)
     {
 		/**
-		 * validazione dati ricevuti dal form
+		 * form data validation
 		 * https://laravel.com/docs/7.x/validation
+		 * errors shown in edit page
 		 */
 		$request->validate([
 			'model'			=> 'required|max:20',
@@ -75,7 +75,7 @@ class ProductController extends Controller
 		$data = $request->all();
 		$new_product = new Product();
 
-		// # MODE 2: fill() based on $fillable defined in the Model # 
+		// # MODE 2: mass fillable properties based on $fillable in Model # 
 		$new_product->fill($data);
 
 		// # MODE 1: single table columns # 
@@ -87,14 +87,14 @@ class ProductController extends Controller
 		// $new_product->availability 	= $data['availability'];
 		// $new_product->stock 			= $data['stock'];
 
-		// @dump($new_product); // array values
+		// @dump($new_product); // just array values
 		$new_product->save(); 	// ! DB writing here !
 		// @dump($new_product); // db values (included id, timestamp)
 
-		@dump(''); // altrimenti non mi funzia il redirect ???
+		@dump(''); // ! ??? ! //
 		
-		return redirect()->route('products.index');
-    }
+		return redirect()->route('products.index', $new_product);
+	}
 
     /**
 	 * %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -106,37 +106,21 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-	// # MODE 3: Model > filtered by id data flow > compact() # 
-	// public function show($id)
-    // {
-	// 	if ($id) {
-	// 		$product = Product::find($id);
-	// 		return view('products.show',compact('product'));
-	// 	} else {
-	// 		abort(404);
-	// 	}
-    // }
-	// # MODE 2: Model instance id parameter = singole row data flow > data pipe # 
+	// # MODE 2: single Model record #
 	/**
-	 * 	qui $product è il nome del parametro in URI secondo route:list
-	 * 	viene passata la singola entità (riga), 
-	 *  non l'intero set di dati (tabella) 
+	 * 	! $product is here the URI parameter defined in route:list !
+	 * 	single Model record is passed (DB table row)	
 	 */
 	public function show(Product $product) 
     {
-		$data = [
-			'product' => $product
-		];
-		return view('products.show',$data);
+		return view('products.show',compact('product'));
     }
-	// # MODE 1: Model > filtered by id data flow > data pipe # 
-	// public function show($id)
+	// # MODE 1: Model data filtered by id #
+    // public function show($id)
     // {
+	// 	// data filter by id
 	// 	$product = Product::find($id);
-	// 	$data = [
-	// 		'product' => $product
-	// 	];
-	// 	return view('products.show',$data);
+    //     return view('products.show',compact('product'));
     // }
 
     /**
@@ -151,20 +135,18 @@ class ProductController extends Controller
      */
 	// # MODE 2 # 
 	/**
-	 * 	qui $product è il nome del parametro in URI secondo route:list
-	 * 	viene passata la singola entità (riga), 
-	 *  non l'intero set di dati (tabella) 
+	 * 	! $product is here the URI parameter defined in route:list !
+	 * 	single Model record is passed (DB table row)	
 	 */
     public function edit(Product $product)
     {
-		return view('products.edit',compact('product'));
+        return view('products.edit',compact('product'));
     }
 	// # MODE 1 # 
     // public function edit($id)
     // {
-	// 	$product_update = Product::findOrFail($id);
-	// 	@dd($product_update);
-	// 	// return 'metodo edit su id='.$id;
+	// 	$product = Product::findOrFail($id);
+    //     return view('products.edit',compact('product'));
     // }
 
     /**
@@ -181,8 +163,9 @@ class ProductController extends Controller
     public function update(Request $request, Product $product)
     {
 		/**
-		 * validazione dati ricevuti dal form
+		 * form data validation
 		 * https://laravel.com/docs/7.x/validation
+		 * errors shown in edit page
 		 */
 		$request->validate([
 			'model'			=> 'required|max:20',
@@ -196,13 +179,15 @@ class ProductController extends Controller
 
 		$data = $request->all();
 		$product->update($data);
-		@dump('');
-		return redirect()->route('products.index');
+
+		@dump(''); // ! ??? ! //
+
+		return redirect()->route('products.index', $product);
     }
 
     /**
 	 * %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-	 * %            DELETE             %
+	 * %            DESTROY            %
 	 * %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	 * 
      * Remove the specified resource from storage.

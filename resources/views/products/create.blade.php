@@ -1,7 +1,13 @@
 @extends('layouts.app')
 
-@section('title','New Product')
+@section('title','Product Edit')
 @section('main_content')
+
+{{-- 
+	CREATE -> create()
+	no Model data available here  
+	via ModelController@create
+--}}
 
 <main>
 

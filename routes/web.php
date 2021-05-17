@@ -14,30 +14,28 @@ use Illuminate\Support\Facades\Route;
 */
 
 /**
- * main route per le pagine "inerti"
+ * main route for not-DB-related pages
  */
-Route::get('/', 'MainController@index' )->name('home');
+Route::get('/', 'MainController@index')->name('home');
 
 /**
- * route per le pagine in dialogo con il DB
- * 
- * Route::resource() include diversi 
- * 		method->URI->Controller@azione->name()
+ * multiple route for DB-related pages
+ * 		Route::resource() icludes
+ *		method->URI->name->Controller@action
+ * 		for Create/Read/Update/Delete DB data
+ * see
+ * 		php route:list
  */
-Route::resource('/products', 'ProductController' );
+Route::resource('/products', 'ProductController');
 /**
- * equivalentemente, più lungo:
+ * equivalent
  * 		Route::get('/products', 'ProductController@index' );
  * 		Route::post('/products', 'ProductController@store' );
  * 		...
  * 
- * stessa URI con diversi metodi conduce a diverse azioni del Controller
- * 
- * vedi 
- * 		php route:list
+ * same URI called with different methods leads to different ModelController actions
  */
 
-
 // Route::get('/', function () {
-//     return view('home');
-// })->name('home-page');
+//     return view('welcome');
+// });

@@ -7,20 +7,18 @@ use Illuminate\Database\Eloquent\Model;
 class Product extends Model
 {
 	/**
-	 * questi nomi di variabile sono vincolati al modello
+	 * system defined variable names
 	 * $table, $fillable
 	 */
 
 	/**
-	 * customizzare nome tabella
-	 * prescindendo dall'automatico plurale del nome del modello
+	 * table custom name
+	 * (no Model<->models auto naming convention)
 	 */ 
-	// protected $table = 'nome_custom_tabella';
+	// protected $table = 'table_custom_name';
 
 	/**
-	 * elenco campi in gestione al modello
-	 * da usare nel controller associato 
-	 * (es. metodo store())
+	 * Allowing mass fillable properties in Model
 	 */
 	protected $fillable = [
 		'model',
@@ -31,6 +29,4 @@ class Product extends Model
 		'availability',
 		'stock'
 	];
-
-	protected $pippo = '';
 }

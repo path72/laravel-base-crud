@@ -1,7 +1,14 @@
 @extends('layouts.app')
 
-@section('title','Edit Product')
+@section('title','Product Edit')
 @section('main_content')
+
+{{-- 
+	EDIT -> edit()
+	single Model record (DB table row) is available here  
+	via ModelController@edit
+--}}
+{{-- @dump($product) --}}
 
 <main>
 
@@ -17,7 +24,6 @@
 
 	<div class="card">
 
-		{{-- rotta e metodo html post (fisso per create, edit) --}}
 		<!--
 			STORE (laravel method: PUT, html method: POST)
 		-->

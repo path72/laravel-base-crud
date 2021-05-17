@@ -1,7 +1,14 @@
 @extends('layouts.app')
 
-@section('title','Product Page')
+@section('title','Product Detail')
 @section('main_content')
+
+{{-- 
+	READ -> show()
+	single Model record (DB table row) is available here  
+	via ModelController@show
+--}}
+{{-- @dump($product) --}}
 
 <main>
 
@@ -28,4 +35,4 @@
 
 </main>
 
-@endsection
+@endsection	
