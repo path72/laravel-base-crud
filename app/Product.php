@@ -19,6 +19,9 @@ class Product extends Model
 
 	/**
 	 * Allowing mass fillable properties in Model
+	 * 
+	 * One bulk action in Controller:
+	 * 		$product->update($data);
 	 */
 	protected $fillable = [
 		'model',

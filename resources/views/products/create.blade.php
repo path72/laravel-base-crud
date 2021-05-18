@@ -11,6 +11,7 @@
 
 <main>
 
+	{{-- VALIDATION error management --}}
 	@if ($errors->any())
 		<div class="alert alert-danger">
 			<ul>
@@ -33,39 +34,44 @@
 
 			<div class="db_columns">
 				{{-- ! input name = nome colonna DB ! --}}
+				{{-- old() trattengo i valori precedenti in caso di mancata validazione (in variabili d'ambiante) --}}
 				<div class="form-group row">
 					<label>Model</label>
-					<input type="text" class="form-control" name="model" placeholder="Model">	
+					<input type="text" class="form-control" name="model" placeholder="Model" value="{{old('model')}}">	
 				</div>
 				<div class="form-group row">
 					<label>Size</label>
-					<input type="number" class="form-control" name="size" placeholder="Size">	
+					<input type="number" class="form-control" name="size" placeholder="Size" value="{{old('size')}}">	
 				</div>
 				<div class="form-group row">
 					<label>Color</label>
-					<input type="text" class="form-control" name="color" placeholder="Color">	
+					<input type="text" class="form-control" name="color" placeholder="Color" value="{{old('color')}}">	
 				</div>
 				<div class="form-group row">
 					<label>Fabric</label>
-					<input type="text" class="form-control" name="fabric" placeholder="Fabric">	
+					<input type="text" class="form-control" name="fabric" placeholder="Fabric" value="{{old('fabric')}}">	
 				</div>
 				<div class="form-group row">
 					<label>Season</label>
 					<select class="form-control" name="season">
-						<option value="">Season</option>	
-						<option value="summer">Summer</option>	
-						<option value="spring">Spring</option>	
-						<option value="fall">Fall</option>	
-						<option value="winter">Winter</option>	
+						<option value="">-- choose --</option>	
+						<option value="summer" 	{{old('season')=='summer'?'selected':''}}>Summer</option>	
+						<option value="spring"	{{old('season')=='spring'?'selected':''}}>Spring</option>	
+						<option value="fall"	{{old('season')=='fall'?'selected':''}}>Fall</option>	
+						<option value="winter"	{{old('season')=='winter'?'selected':''}}>Winter</option>
 					</select>	
 				</div>
 				<div class="form-group row">
 					<label>Availability</label>
-					<input type="number" class="form-control" name="availability" placeholder="Availability">	
+					<select class="form-control" name="availability">
+						<option value="">-- choose --</option>	
+						<option value="1" {{old('availability')=="1"?'selected':''}}>Yes</option>	
+						<option value="0" {{old('availability')=="0"?'selected':''}}>No</option>	
+					</select>				
 				</div>
 				<div class="form-group row">
 					<label>Stock</label>
-					<input type="number" class="form-control" name="stock" placeholder="Stock">	
+					<input type="number" class="form-control" name="stock" placeholder="Stock" value="{{old('stock')}}">	
 				</div>
 			</div>
 			

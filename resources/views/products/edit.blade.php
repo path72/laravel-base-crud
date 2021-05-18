@@ -4,7 +4,7 @@
 @section('main_content')
 
 {{-- 
-	EDIT -> edit()
+	UPDATE -> edit()
 	single Model record (DB table row) is available here  
 	via ModelController@edit
 --}}
@@ -12,6 +12,7 @@
 
 <main>
 
+	{{-- VALIDATION error management --}}
 	@if ($errors->any())
 		<div class="alert alert-danger">
 			<ul>
@@ -62,7 +63,11 @@
 				</div>
 				<div class="form-group row">
 					<label>Availability</label>
-					<input type="text" class="form-control" name="availability" placeholder="Availability" value="{{$product['availability']}}">	
+					<select class="form-control" name="availability">
+						<option value="">Availability</option>
+						<option value="1" {{$product['availability']==1?'selected':''}}>Yes</option>	
+						<option value="0" {{$product['availability']==0?'selected':''}}>No</option>	
+					</select>	
 				</div>
 				<div class="form-group row">
 					<label>Stock</label>

@@ -21,10 +21,10 @@ class ProductController extends Controller
 		// all data from Model
 		$products = Product::all();
 
-		// # MODE 1 # 
+		// # MODE 1: implicit data flow container # 
         return view('products.index',compact('products'));
 
-		// # MODE 2 # 
+		// # MODE 2: explicit data flow container # 
 		// $data = [
 		// 	'products' => $products
 		// ];
@@ -57,20 +57,7 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-		/**
-		 * form data validation
-		 * https://laravel.com/docs/7.x/validation
-		 * errors shown in edit page
-		 */
-		$request->validate([
-			'model'			=> 'required|max:20',
-			'size'			=> 'required|numeric|max:25',
-			'color'			=> 'required|max:20',
-			'fabric'		=> 'required|max:50',
-			'season'		=> 'required|max:50',
-			'availability'	=> 'required|numeric|max:1',
-			'stock'			=> 'required|numeric|max:50000'
-		]);
+		$this->validation($request);
 
 		$data = $request->all();
 		$new_product = new Product();
@@ -78,7 +65,7 @@ class ProductController extends Controller
 		// # MODE 2: mass fillable properties based on $fillable in Model # 
 		$new_product->fill($data);
 
-		// # MODE 1: single table columns # 
+		// # MODE 1: single table columns are filled # 
 		// $new_product->model 			= $data['model'];
 		// $new_product->size 			= $data['size'];
 		// $new_product->color 			= $data['color'];
@@ -89,11 +76,12 @@ class ProductController extends Controller
 
 		// @dump($new_product); // just array values
 		$new_product->save(); 	// ! DB writing here !
-		// @dump($new_product); // db values (included id, timestamp)
+		// @dump($new_product); // db values (id,timestamp included)
 
-		@dump(''); // ! ??? ! //
+		@dump(''); // ? working redirect ? //
+		return redirect()->route('products.index')->with('status','Product Succesfully Created');
 		
-		return redirect()->route('products.index', $new_product);
+		// https://laravel.com/docs/7.x/responses
 	}
 
     /**
@@ -106,16 +94,16 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-	// # MODE 2: single Model record #
+	// # MODE 2: single Model record # 
 	/**
-	 * 	! $product is here the URI parameter defined in route:list !
+	 * 	! $product is here the URI {parameter} defined in route:list !
 	 * 	single Model record is passed (DB table row)	
 	 */
 	public function show(Product $product) 
     {
 		return view('products.show',compact('product'));
     }
-	// # MODE 1: Model data filtered by id #
+	// # MODE 1: Model data filtered by id # 
     // public function show($id)
     // {
 	// 	// data filter by id
@@ -135,7 +123,7 @@ class ProductController extends Controller
      */
 	// # MODE 2 # 
 	/**
-	 * 	! $product is here the URI parameter defined in route:list !
+	 * 	! $product is here the URI {parameter} defined in route:list !
 	 * 	single Model record is passed (DB table row)	
 	 */
     public function edit(Product $product)
@@ -162,27 +150,15 @@ class ProductController extends Controller
      */
     public function update(Request $request, Product $product)
     {
-		/**
-		 * form data validation
-		 * https://laravel.com/docs/7.x/validation
-		 * errors shown in edit page
-		 */
-		$request->validate([
-			'model'			=> 'required|max:20',
-			'size'			=> 'required|numeric|max:25',
-			'color'			=> 'required|max:20',
-			'fabric'		=> 'required|max:50',
-			'season'		=> 'required|max:50',
-			'availability'	=> 'required|numeric|max:1',
-			'stock'			=> 'required|numeric|max:50000'
-		]);
+		$this->validation($request);
 
 		$data = $request->all();
 		$product->update($data);
 
-		@dump(''); // ! ??? ! //
-
-		return redirect()->route('products.index', $product);
+		@dump(''); // ? working redirect ? //
+		return redirect()->route('products.index')->with('status','Product Succesfully Updated');
+		
+		// https://laravel.com/docs/7.x/responses
     }
 
     /**
@@ -198,6 +174,23 @@ class ProductController extends Controller
     public function destroy(Product $product)
     {
 		$product->delete();
-		return redirect()->route('products.index');
+		return redirect()->route('products.index')->with('status','Product Succesfully Deleted');
     }
+
+	/**
+	 * form data validation
+	 * https://laravel.com/docs/7.x/validation
+	 * errors shown in EDIT/CREATE view
+	 */
+	protected function validation($req) {
+		$req->validate([
+			'model'			=> 'required|max:20',
+			'size'			=> 'required|numeric|max:25',
+			'color'			=> 'required|max:20',
+			'fabric'		=> 'required|max:50',
+			'season'		=> 'required|max:50',
+			'availability'	=> 'required|numeric|max:1',
+			'stock'			=> 'required|numeric|max:50000'
+		]);
+	}
 }

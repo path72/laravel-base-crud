@@ -15,7 +15,7 @@
 	@php 
 		$keys  = array_keys($product->toArray());
 		$class = '';
-		$msg   = 'Yes'; 
+		$msg   = 'Yes';
 		if ($product->availability==0) {
 			$class = 'grey';
 			$msg   = 'No';
